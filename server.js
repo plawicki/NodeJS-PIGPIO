@@ -7,7 +7,6 @@ var http = require('http');
 var path = require('path');
 
 var express = require('express');
-
 //
 // ## SimpleServer `SimpleServer(obj)`
 //
@@ -17,31 +16,33 @@ var express = require('express');
 var router = express();
 var server = http.createServer(router);
 
+var socketio = require("socket.io");
+var io = socketio.listen(server, { log: false });
+
 router.use(express.static(path.resolve(__dirname, 'client')));
+router.use(express.static("public"));
+router.use(express.static("bower_components"));
 
 var gpio = require('./clibs/libgpio.js');
 
 var output = gpio.init();
 
-var power = 255;
+if(output != 0)
+	console.log("\nPIGPIO run successfully...\n");
 
-while(true)
-{
-while(power <= 255 && power > 0)
-{
-	power--;
-	output = gpio.pwm(17, power);
-}
-while(power >= 0 && power < 255)
-{
-	power++;
-	gpio.pwm(17, power);
-}
-}
+io.sockets.on('connection', function (socket) {
 
-console.log(output);
+	socket.on('change power', function (power) {
+		gpio.pwm(17, power);
+	});
+
+	socket.on('change state', function (state) {
+		gpio.write(17, state);
+	});
+});
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
   var addr = server.address();
-  console.log("Chat server listening at", addr.address + ":" + addr.port);
+  console.log("NodeJS-PIGPIO  server listening at", addr.address + ":" + addr.port);
 });
+
