@@ -14,7 +14,7 @@ $(function() {
       min: 0,
       max: 255,
       slide: function( event, ui ) {
-        $( "#amount" ).val( "$" + ui.value );
+        $( "#amount" ).val( ui.value );
         socket.emit('change power', ui.value);
       }
     });
