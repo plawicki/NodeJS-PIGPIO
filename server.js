@@ -37,18 +37,21 @@ io.sockets.on('connection', function (socket) {
 
         socket.on('change power', function (power) {
                 gpio.pwm(gpioNumb, power);
+                console.log("\n" + gpioNumb + " pwm: " + power + "\n");
         });
 
         socket.on('change state', function (state) {
-
                 gpio.write(gpioNumb, state);
+                console.log("\n" + gpioNumb + " changed state to: " + state + "\n");
         });
         socket.on('change gpio', function (gpioN) {
+                console.log("\nPort changed, from " + gpioNumb + " to " + gpioN + "\n");
                 gpioNumb = gpioN;
         });
         socket.on('read gpio', function (gpioN) {
         	var actualState = gpio.read(gpioN);
         	socket.emit('gpio', { "state": actualState });	
+        	console.log("\nEmiting state (" + actualState + ") of " + gpioN + "\n");
         });
 });
 
