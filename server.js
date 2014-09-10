@@ -1,3 +1,4 @@
+
 //
 // # SimpleServer
 //
@@ -28,21 +29,30 @@ var gpio = require('./clibs/libgpio.js');
 var output = gpio.init();
 
 if(output != 0)
-	console.log("\nPIGPIO run successfully...\n");
+        console.log("\nPIGPIO run successfully...\n");
+
+var gpioNumb = 17;
 
 io.sockets.on('connection', function (socket) {
 
-	socket.on('change power', function (power) {
-		gpio.pwm(17, power);
-	});
+        socket.on('change power', function (power) {
+                gpio.pwm(gpioNumb, power);
+        });
 
-	socket.on('change state', function (state) {
-		gpio.write(17, state);
-	});
+        socket.on('change state', function (state) {
+
+                gpio.write(gpioNumb, state);
+        });
+        socket.on('change gpio', function (gpioN) {
+                gpioNumb = gpioN;
+        });
+        socket.on('read gpio', function (gpioN) {
+        	var actualState = gpio.read(gpioN);
+        	socket.emit('gpio', { "state": "actualState" });	
+        });
 });
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
   var addr = server.address();
   console.log("NodeJS-PIGPIO  server listening at", addr.address + ":" + addr.port);
 });
-
