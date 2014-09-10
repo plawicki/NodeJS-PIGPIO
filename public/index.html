@@ -12,15 +12,22 @@
 </head>
 <body>
 
-<input id="nr" type="text"></input>
-<button id="gpioChange">ChangeGPIO</button>
-<button id="on">ON</button>
-<button id="off">OFF</button>
+<div>
+  <input id="nr" type="text"></input>
+  <button id="gpioChange">Change port</button>
+  <br>
+  <label>gpio state:</label>
+  <input readonly id="gpioState">
+  <br>
+  <button id="on">ON</button>
+  <button id="off">OFF</button>
+</div>
 
-<label for="amount">Power:</label>
-<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+<div>
+  <label for="amount">Power:</label>
+  <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
 
-<div id="slider" style="width: 50%"></div>
-
+  <div id="slider" style="width: 50%"></div>
+</div>
 </body>
 </html>
