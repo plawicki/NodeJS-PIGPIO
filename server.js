@@ -48,7 +48,7 @@ io.sockets.on('connection', function (socket) {
         });
         socket.on('read gpio', function (gpioN) {
         	var actualState = gpio.read(gpioN);
-        	socket.emit('gpio', { "state": "actualState" });	
+        	socket.emit('gpio', { "state": actualState });	
         });
 });
 
