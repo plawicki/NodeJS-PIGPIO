@@ -16,7 +16,7 @@ $(function() {
       slide: function( event, ui ) {
         $( "#amount" ).val( ui.value );
         socket.emit('change power', ui.value);
-        socket.emit('read gpio', $('#nr').val());
+        s$('#gpioRead').click();
       }
     });
 
