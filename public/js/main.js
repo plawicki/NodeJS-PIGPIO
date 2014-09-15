@@ -16,26 +16,31 @@ $(function() {
       slide: function( event, ui ) {
         $( "#amount" ).val( ui.value );
         socket.emit('change power', ui.value);
-        s$('#gpioRead').click();
       }
     });
 
     $('#gpioChange').click(function(){
         socket.emit('change gpio', $('#nr').val());
+        readGPIO();
     });
     
     $('#gpioRead').click(function(){
-    	socket.emit('read gpio', $('#nr').val());
+    	readGPIO();
     });
 
     $('#on').click(function(){
         socket.emit('change state', 1);
+        readGPIO();
     });
 
     $('#off').click(function(){
         socket.emit('change state', 0);
+        readGPIO();
     });
 
     $( "#amount" ).val( $( "#slider-range-min" ).slider( "value" ) );
-
+    
+    var readGPIO = function(){
+        socket.emit('read gpio', $('#nr').val());
+    }
 });
