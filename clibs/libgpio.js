@@ -1,6 +1,6 @@
 var ffi = require('ffi');
 
-var libgpio = ffi.Library('./clibs/libgpio', {
+var libgpio = ffi.Library('./clibs/libgpio_smoke', {
 	'initGPIO': [ 'int', []],
 	'termGPIO': [ 'void', []],
 	'readGPIO': [ 'int', [ 'int' ]],

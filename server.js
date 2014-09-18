@@ -24,7 +24,7 @@ router.use(express.static(path.resolve(__dirname, 'client')));
 router.use(express.static("public"));
 router.use(express.static("bower_components"));
 
-var gpio = require('./clibs/libgpio.js');
+var gpio = require('/home/ubuntu/workspace/NodeJS-PIGPIO/clibs/libgpio_smoke.js');
 
 var output = gpio.init();
 
